@@ -1,21 +1,36 @@
-FROM alpine:3.6
+FROM golang:1.9-alpine3.7
 
-ARG plugins=http.authz,http.awslambda,http.cgi,http.cors,http.datadog,http.expires,http.filemanager,http.filter,http.git,http.gopkg,http.grpc,http.hugo,http.ipfilter,http.jwt,http.login,http.mailout,http.minify,http.nobots,http.prometheus,http.proxyprotocol,http.ratelimit,http.realip,http.reauth,http.restic,http.upload,http.webdav,tls.dns.cloudflare,tls.dns.digitalocean,tls.dns.dnsimple,tls.dns.dnspod,tls.dns.dyn,tls.dns.exoscale,tls.dns.gandi,tls.dns.googlecloud,tls.dns.linode,tls.dns.namecheap,tls.dns.ovh,tls.dns.rackspace,tls.dns.rfc2136,tls.dns.route53,tls.dns.vultr
+RUN apk --no-cache add git \
+  && go get github.com/mholt/caddy \
+    && cd src/github.com/mholt/caddy; git checkout v0.10.10 \
+  && go get github.com/caddyserver/builds
 
-RUN apk --no-cache add curl ca-certificates git \
-  && arch=$(apk --print-arch | sed 's/x86_64/amd64/') \
-  && curl -sfSL "https://caddyserver.com/download/linux/$arch?plugins=$plugins" \
-    | tar -xz -C /tmp \
-  && mv /tmp/caddy /usr/bin/caddy \
-  && mkdir /var/www
-  # FIXME! checksum
+RUN sed -i '/\/\/ This is where other plugins get plugged in (imported)/a \
+\\t_ "github.com/abiosoft/caddy-git"\n \
+\t_ "github.com/caddyserver/forwardproxy"\n \
+\t_ "github.com/BTBurke/caddy-jwt"\n \
+\t_ "github.com/hacdias/filemanager"\n \
+\t_ "github.com/casbin/caddy-authz"\n \
+\t_ "github.com/tarent/loginsrv/caddy"\n \
+\t_ "github.com/xuqingfeng/caddy-rate-limit"\n \
+\t_ "github.com/hacdias/filemanager"\n \
+\t_ "github.com/restic/caddy"\n \
+\t_ "github.com/nicolasazrak/caddy-cache"\n \
+\t_ "github.com/miekg/caddy-prometheus"\n' \
+    /go/src/github.com/mholt/caddy/caddy/caddymain/run.go
 
+RUN cd /go/src/github.com/mholt/caddy/caddy \
+  && go get \
+  && go run build.go \
+  && ./caddy -version | head -n1 \
+  && ./caddy -plugins
+
+
+FROM alpine:3.7
+
+COPY --from=0 /go/src/github.com/mholt/caddy/caddy /usr/local/bin/
 COPY ./Caddyfile /etc/caddy/
 ENV CADDYPATH /var/lib/caddy
-
-VOLUME /etc/caddy
-VOLUME /var/lib/caddy
-VOLUME /var/www
 
 EXPOSE 80 443
 CMD ["caddy", "-conf", "/etc/caddy/Caddyfile"]
