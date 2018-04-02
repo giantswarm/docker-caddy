@@ -4,7 +4,7 @@ RUN apk --no-cache add git \
   && go get github.com/mholt/caddy \
   && go get github.com/caddyserver/builds \
   && cd src/github.com/mholt/caddy \
-  && git -c advice.detachedHead=false checkout v0.10.11 \
+  && git -c advice.detachedHead=false checkout v0.10.12 \
   && cd caddy \
   && sed -i '/\/\/ This is where other plugins get plugged in (imported)/a \
 \\t_ "github.com/casbin/caddy-authz" // http.authz\n \
@@ -12,9 +12,12 @@ RUN apk --no-cache add git \
 \t_ "github.com/jung-kurt/caddy-cgi" // http.cgi\n \
 \t_ "github.com/captncraig/cors" // http.cors\n \
 \t_ "github.com/epicagency/caddy-expires" // http.expires\n \
+\t_ "github.com/kodnaplakal/caddy-geoip" // http.geoip\n \
+\t_ "github.com/filebrowser/filebrowser/caddy/filemanager" // http.filemanager\n \
 \t_ "github.com/echocat/caddy-filter" // http.filter\n \
 \t_ "github.com/caddyserver/forwardproxy" // http.forwardproxy\n \
 \t_ "github.com/abiosoft/caddy-git" // http.git\n \
+\t_ "github.com/zikes/gopkg" // http.gopkg\n \
 \t_ "github.com/pyed/ipfilter" // http.ipfilter\n \
 \t_ "github.com/BTBurke/caddy-jwt" // http.jwt\n \
 \t_ "github.com/simia-tech/caddy-locale" // http.locale\n \
@@ -27,6 +30,7 @@ RUN apk --no-cache add git \
 \t_ "github.com/captncraig/caddy-realip" // http.realip\n \
 \t_ "github.com/freman/caddy-reauth" // http.reauth\n \
 \t_ "github.com/restic/caddy" // http.restic\n \
+\t_ "blitznote.com/src/caddy.upload" // http.upload\n \
 \t_ "github.com/hacdias/caddy-webdav" // http.webdav\n' \
     caddymain/run.go \
   && go get \
@@ -34,14 +38,8 @@ RUN apk --no-cache add git \
   && ./caddy -version | head -n1 \
   && ./caddy -plugins
 
-# \t_ "github.com/wmark/caddy.upload" // http.upload\n \
-# error: package github.com/wmark/caddy.upload: code in directory /go/src/github.com/wmark/caddy.upload expects import "blitznote.com/src/caddy.upload"
-
 # \t_ "github.com/pieterlouw/caddy-grpc" // http.grpc\n \
-# error: ../../../pieterlouw/caddy-grpc/server.go:45:54: cannot use director (type func("context".Context, string) (*grpc.ClientConn, error)) as type proxy.StreamDirector in argument to proxy.TransparentHandler
-
-# \t_ "github.com/filebrowser/filebrowser/tree/master/caddy/filemanager" // http.filemanager\n \
-# package github.com/filebrowser/filebrowser/tree/master/caddy/filemanager: cannot find package "github.com/filebrowser/filebrowser/tree/master/caddy/filemanager" in any of:
+# error: ../../../mwitkow/grpc-proxy/proxy/handler.go:63:30: undefined: transport.StreamFromContext
 
 # ---
 
