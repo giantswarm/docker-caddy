@@ -3,4 +3,4 @@ gzip
 log stdout
 errors stdout
 root /var/www
-browse /var/www
+browse
