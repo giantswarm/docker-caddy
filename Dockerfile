@@ -13,6 +13,7 @@ RUN apk --no-cache add git \
 \t_ "github.com/captncraig/cors" // http.cors\n \
 \t_ "github.com/epicagency/caddy-expires" // http.expires\n \
 \t_ "github.com/kodnaplakal/caddy-geoip" // http.geoip\n \
+\t_ "github.com/pieterlouw/caddy-grpc" // http.grpc\n \
 \t_ "github.com/filebrowser/filebrowser/caddy/filemanager" // http.filemanager\n \
 \t_ "github.com/echocat/caddy-filter" // http.filter\n \
 \t_ "github.com/caddyserver/forwardproxy" // http.forwardproxy\n \
@@ -37,9 +38,6 @@ RUN apk --no-cache add git \
   && go run build.go \
   && ./caddy -version | head -n1 \
   && ./caddy -plugins
-
-# \t_ "github.com/pieterlouw/caddy-grpc" // http.grpc\n \
-# error: ../../../mwitkow/grpc-proxy/proxy/handler.go:63:30: undefined: transport.StreamFromContext
 
 # ---
 
