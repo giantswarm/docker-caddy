@@ -4,25 +4,30 @@ RUN apk --no-cache add git \
   && go get github.com/mholt/caddy \
   && go get github.com/caddyserver/builds \
   && cd src/github.com/mholt/caddy \
-  && git -c advice.detachedHead=false checkout v0.10.12 \
+  && git -c advice.detachedHead=false checkout v0.10.13 \
   && cd caddy \
   && sed -i '/\/\/ This is where other plugins get plugged in (imported)/a \
-\\t_ "github.com/casbin/caddy-authz" // http.authz\n \
+\\t_ "github.com/linkonoid/caddy-dyndns" // dyndns\n \
+\t_ "github.com/casbin/caddy-authz" // http.authz\n \
+\t_ "github.com/miquella/caddy-awses" // http.awses\n \
+\t_ "github.com/coopernurse/caddy-awslambda" // http.awslambda\n \
 \t_ "github.com/nicolasazrak/caddy-cache" // http.cache\n \
 \t_ "github.com/jung-kurt/caddy-cgi" // http.cgi\n \
 \t_ "github.com/captncraig/cors" // http.cors\n \
+\t_ "github.com/payintech/caddy-datadog" // http.datadog\n \
 \t_ "github.com/epicagency/caddy-expires" // http.expires\n \
-\t_ "github.com/kodnaplakal/caddy-geoip" // http.geoip\n \
-\t_ "github.com/pieterlouw/caddy-grpc" // http.grpc\n \
 \t_ "github.com/filebrowser/filebrowser/caddy/filemanager" // http.filemanager\n \
 \t_ "github.com/echocat/caddy-filter" // http.filter\n \
 \t_ "github.com/caddyserver/forwardproxy" // http.forwardproxy\n \
+\t_ "github.com/kodnaplakal/caddy-geoip" // http.geoip\n \
 \t_ "github.com/abiosoft/caddy-git" // http.git\n \
 \t_ "github.com/zikes/gopkg" // http.gopkg\n \
+\t_ "github.com/pieterlouw/caddy-grpc" // http.grpc\n \
 \t_ "github.com/pyed/ipfilter" // http.ipfilter\n \
 \t_ "github.com/BTBurke/caddy-jwt" // http.jwt\n \
 \t_ "github.com/simia-tech/caddy-locale" // http.locale\n \
 \t_ "github.com/tarent/loginsrv/caddy" // http.login\n \
+\t_ "github.com/SchumacherFM/mailout" // http.mailout\n \
 \t_ "github.com/hacdias/caddy-minify" // http.minify\n \
 \t_ "github.com/Xumeiquer/nobots" // http.nobots\n \
 \t_ "github.com/miekg/caddy-prometheus" // http.prometheus\n \

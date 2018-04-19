@@ -4,7 +4,7 @@ RUN apk --no-cache add git \
   && go get github.com/mholt/caddy \
   && go get github.com/caddyserver/builds \
   && cd src/github.com/mholt/caddy \
-  && git -c advice.detachedHead=false checkout v0.10.12 \
+  && git -c advice.detachedHead=false checkout v0.10.13 \
   && cd caddy \
   && go get \
   && go run build.go \
@@ -13,11 +13,11 @@ RUN apk --no-cache add git \
 
 # ---
 
-FROM alpine:3.7
+FROM gcr.io/distroless/base
 
-COPY --from=0 /go/src/github.com/mholt/caddy/caddy /usr/local/bin/
+COPY --from=0 /go/src/github.com/mholt/caddy/caddy /
 COPY ./Caddyfile /etc/caddy/
 ENV CADDYPATH /var/lib/caddy
 
 EXPOSE 80 443
-CMD ["caddy", "-conf", "/etc/caddy/Caddyfile"]
+CMD ["/caddy", "-conf", "/etc/caddy/Caddyfile"]
