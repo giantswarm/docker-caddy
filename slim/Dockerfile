@@ -13,11 +13,11 @@ RUN apk --no-cache add git \
 
 # ---
 
-FROM gcr.io/distroless/base@sha256:3bbeac2989faa8ff33f5e34ea005f8a91c8442284fda342c572b61114d0dc847
+FROM alpine:3.7
 
-COPY --from=0 /go/src/github.com/mholt/caddy/caddy /
+COPY --from=0 /go/src/github.com/mholt/caddy/caddy /usr/local/bin/
 COPY ./Caddyfile /etc/caddy/
 ENV CADDYPATH /var/lib/caddy
 
 EXPOSE 80 443
-CMD ["/caddy", "-conf", "/etc/caddy/Caddyfile"]
+CMD ["caddy", "-conf", "/etc/caddy/Caddyfile"]
