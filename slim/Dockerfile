@@ -13,7 +13,7 @@ RUN apk --no-cache add git \
 
 # ---
 
-FROM gcr.io/distroless/base
+FROM gcr.io/distroless/base@sha256:3bbeac2989faa8ff33f5e34ea005f8a91c8442284fda342c572b61114d0dc847
 
 COPY --from=0 /go/src/github.com/mholt/caddy/caddy /
 COPY ./Caddyfile /etc/caddy/
