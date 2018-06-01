@@ -4,7 +4,7 @@ RUN apk --no-cache add git \
   && go get github.com/mholt/caddy \
   && go get github.com/caddyserver/builds \
   && cd src/github.com/mholt/caddy \
-  && git -c advice.detachedHead=false checkout v0.10.12 \
+  && git -c advice.detachedHead=false checkout v0.11.0 \
   && cd caddy \
   && sed -i '/\/\/ This is where other plugins get plugged in (imported)/a \
 \\t_ "github.com/casbin/caddy-authz" // http.authz\n \
