@@ -1,4 +1,4 @@
-FROM golang:1.10-alpine3.7
+FROM golang:1.10-alpine3.8
 
 RUN apk --no-cache add git \
   && go get github.com/mholt/caddy \
@@ -46,7 +46,7 @@ RUN apk --no-cache add git \
 
 # ---
 
-FROM alpine:3.7
+FROM alpine:3.8
 
 COPY --from=0 /go/src/github.com/mholt/caddy/caddy /usr/local/bin/
 COPY ./Caddyfile /etc/caddy/
