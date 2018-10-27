@@ -1,10 +1,10 @@
-FROM golang:1.10-alpine3.7
+FROM golang:1.11-alpine3.8
 
 RUN apk --no-cache add git \
   && go get github.com/mholt/caddy \
   && go get github.com/caddyserver/builds \
   && cd src/github.com/mholt/caddy \
-  && git -c advice.detachedHead=false checkout v0.10.14 \
+  && git -c advice.detachedHead=false checkout v0.11.0 \
   && cd caddy \
   && go get \
   && go run build.go \

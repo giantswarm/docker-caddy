@@ -1,10 +1,10 @@
-FROM golang:1.10-alpine3.8
+FROM golang:1.11-alpine3.8
 
 RUN apk --no-cache add git \
   && go get github.com/mholt/caddy \
   && go get github.com/caddyserver/builds \
   && cd src/github.com/mholt/caddy \
-  && git -c advice.detachedHead=false checkout v0.10.14 \
+  && git -c advice.detachedHead=false checkout v0.11.0 \
   && cd caddy \
   && sed -i '/\/\/ This is where other plugins get plugged in (imported)/a \
 \\t_ "github.com/linkonoid/caddy-dyndns" // dyndns\n \
@@ -16,7 +16,7 @@ RUN apk --no-cache add git \
 \t_ "github.com/captncraig/cors" // http.cors\n \
 \t_ "github.com/payintech/caddy-datadog" // http.datadog\n \
 \t_ "github.com/epicagency/caddy-expires" // http.expires\n \
-\t_ "github.com/filebrowser/filebrowser/caddy/filemanager" // http.filemanager\n \
+# \t_ "github.com/filebrowser/caddy/filemanager" // http.filemanager\n \
 \t_ "github.com/echocat/caddy-filter" // http.filter\n \
 \t_ "github.com/caddyserver/forwardproxy" // http.forwardproxy\n \
 \t_ "github.com/kodnaplakal/caddy-geoip" // http.geoip\n \

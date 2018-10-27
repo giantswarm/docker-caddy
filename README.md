@@ -7,5 +7,5 @@ docker run \
   --volume $PWD/html:/var/www \
   --publish 80:80 \
   --publish 443:443 \
-  giantswarm/caddy:master
+  giantswarm/caddy:0.11.0
 ```
