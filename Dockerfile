@@ -53,5 +53,8 @@ COPY --from=0 /go/src/github.com/mholt/caddy/caddy /usr/local/bin/
 COPY ./Caddyfile /etc/caddy/
 ENV CADDYPATH /var/lib/caddy
 
-EXPOSE 80 443
+RUN adduser -D -u 1000 caddy
+USER caddy
+
+EXPOSE 8080 8443
 CMD ["caddy", "-conf", "/etc/caddy/Caddyfile"]
