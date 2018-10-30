@@ -17,6 +17,7 @@ RUN apk --no-cache add git \
 \t_ "github.com/payintech/caddy-datadog" // http.datadog\n \
 \t_ "github.com/epicagency/caddy-expires" // http.expires\n \
 # \t_ "github.com/filebrowser/caddy/filemanager" // http.filemanager\n \
+#^ see https://github.com/filebrowser/filebrowser/issues/554
 \t_ "github.com/echocat/caddy-filter" // http.filter\n \
 \t_ "github.com/caddyserver/forwardproxy" // http.forwardproxy\n \
 \t_ "github.com/kodnaplakal/caddy-geoip" // http.geoip\n \
